@@ -7,10 +7,11 @@ import javafx.scene.layout.GridPane;
 
 public class Board {
 
-    int[][] board;
+    public int[][] board;
     int row, col;
     GridPane UIBoard;
     public WinStatus winStatus;
+    public Minimax_Implementation minimax;
 
     public Board(int row, int col, GridPane UIBoard)
     {
@@ -32,6 +33,8 @@ public class Board {
             for(int j=00; j<col; j++)
                 board[i][j] = 0;
         }
+
+        minimax = new Minimax_Implementation(this);
     }
 
     public boolean isEmptyBoard()
@@ -52,60 +55,67 @@ public class Board {
     {
         Cell cell = new Cell(-1, -1);
 
-        if(board[0][col]!=0)
-        {
-            return cell;
-        }
+        if (playerType == Player.HUMAN) {
+            if (board[0][col] != 0) {
+                return cell;
+            } else {
+                for (int i = 0; i < row; i++) {
+                    if (board[i][col] != 0) {
 
-        else
-        {
-            for(int i=0; i<row; i++)
-            {
-                if(board[i][col]!=0)
-                {
-                    if(playerType == Player.HUMAN)
                         board[i-1][col] = 1;
 
-                    else
-                    {
-                        // Apply Minimax algorithm to get col value;
-                        // col = col value from minmax algo;
+                        cell = new Cell(i - 1, col);
 
-                        board[i-1][col] = 2;
+                        Piece piece = new Piece(playerType, cell, UIBoard);
+                        piece.addPieceToCell();
+
+                        return cell;
                     }
-
-
-                    cell = new Cell(i-1, col);
-
-                    Piece piece = new Piece(playerType, cell, UIBoard);
-                    piece.addPieceToCell();
-
-                    return cell;
-
                 }
             }
-        }
 
-        if(playerType == Player.HUMAN)
-            board[row-1][col] = 1;
-        else
-        {
-            // Apply Minimax algorithm to get col value;
-            // col = col value from minmax algo;
+            board[row - 1][col] = 1;
+
+            cell = new Cell(row - 1, col);
+
+            Piece piece = new Piece(playerType, cell, UIBoard);
+            piece.addPieceToCell();
+
+            return cell;
+        } else {
+            col = minimax.Minimax(board, 10, Integer.MIN_VALUE, Integer.MAX_VALUE, true).col;
+
+            if (board[0][col] != 0) {
+                col = minimax.Minimax(board, 10, Integer.MIN_VALUE, Integer.MAX_VALUE, true).col;
+            } else {
+                for (int i = 0; i < row; i++) {
+                    if (board[i][col] != 0) {
+
+                        board[i-1][col] = 2;
+
+                        cell = new Cell(i - 1, col);
+
+                        Piece piece = new Piece(playerType, cell, UIBoard);
+                        piece.addPieceToCell();
+
+                        return cell;
+                    }
+                }
+            }
 
             board[row-1][col] = 2;
+
+            cell = new Cell(row - 1, col);
+
+            Piece piece = new Piece(playerType, cell, UIBoard);
+            piece.addPieceToCell();
+
+            return cell;
+
         }
-
-
-        cell = new Cell(row-1, col);
-
-        Piece piece = new Piece(playerType, cell, UIBoard);
-        piece.addPieceToCell();
-
-        return cell;
     }
 
-    void printBoard()
+    public void printBoard(int[][] board)
     {
         for(int i=0; i<row; i++)
         {

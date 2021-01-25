@@ -34,24 +34,20 @@ public class Controller implements Initializable {
 
     void toggleTurn()
     {
+        playerType = Player.AI;
+        statusText.setText("AI Turn");
+        statusText.setFill(Paint.valueOf("c6854b"));
+
         if(!isValidTurn())
             return;
 
-        if(playerType == Player.HUMAN)
-        {
-            playerType = Player.AI;
-            statusText.setText("AI Turn");
-            statusText.setFill(Paint.valueOf("c6854b"));
-        }
-        else
-        {
-            //For minimax AI algo
-            //board.turn(playerType, -1);
+        board.turn(Player.AI, 1);
 
-            playerType = Player.HUMAN;
-            statusText.setText("Human Turn");
-            statusText.setFill(Paint.valueOf("b54545"));
-        }
+        playerType = Player.HUMAN;
+        statusText.setText("Human Turn");
+        statusText.setFill(Paint.valueOf("b54545"));
+
+        isValidTurn();
     }
 
     public boolean isValidTurn()
@@ -61,6 +57,7 @@ public class Controller implements Initializable {
         if(winStatus == 1)
         {
             statusText.setText("Human Win");
+            statusText.setFill(Paint.valueOf("b54545"));
             board.winStatus = WinStatus.WIN;
             return false;
         }
@@ -68,6 +65,7 @@ public class Controller implements Initializable {
         else if(winStatus == 2)
         {
             statusText.setText("AI Win");
+            statusText.setFill(Paint.valueOf("c6854b"));
             board.winStatus = WinStatus.WIN;
             return false;
         }
@@ -85,7 +83,7 @@ public class Controller implements Initializable {
         if(!isValidTurn())
             return;
 
-        board.turn(playerType, 0);
+        board.turn(Player.HUMAN, 0);
         toggleTurn();
     }
 
@@ -94,7 +92,7 @@ public class Controller implements Initializable {
         if(!isValidTurn())
             return;
 
-        board.turn(playerType, 1);
+        board.turn(Player.HUMAN, 1);
         toggleTurn();
     }
 
@@ -103,7 +101,7 @@ public class Controller implements Initializable {
         if(!isValidTurn())
             return;
 
-        board.turn(playerType, 2);
+        board.turn(Player.HUMAN, 2);
         toggleTurn();
     }
 
@@ -112,7 +110,7 @@ public class Controller implements Initializable {
         if(!isValidTurn())
             return;
 
-        board.turn(playerType, 3);
+        board.turn(Player.HUMAN, 3);
         toggleTurn();
     }
 
@@ -121,7 +119,7 @@ public class Controller implements Initializable {
         if(!isValidTurn())
             return;
 
-        board.turn(playerType, 4);
+        board.turn(Player.HUMAN, 4);
         toggleTurn();
     }
 
@@ -130,7 +128,7 @@ public class Controller implements Initializable {
         if(!isValidTurn())
             return;
 
-        board.turn(playerType, 5);
+        board.turn(Player.HUMAN, 5);
         toggleTurn();
     }
 
@@ -139,7 +137,7 @@ public class Controller implements Initializable {
         if(!isValidTurn())
             return;
 
-        board.turn(playerType, 6);
+        board.turn(Player.HUMAN, 6);
         toggleTurn();
     }
 

@@ -21,5 +21,29 @@ public class Main extends Application {
 
     public static void main(String[] args) {
         launch(args);
+
+        /*Board board = new Board(6,7, new GridPane());
+
+        Minimax_Implementation minimax_implementation = new Minimax_Implementation(board);
+
+        Scanner sc = new Scanner(System.in);
+
+        while(true)
+        {
+            int col;
+            System.out.print("Enter column number: ");
+            col = sc.nextInt();
+
+            minimax_implementation.dropPiece(board.board, col, Player.HUMAN);
+
+            Column column = minimax_implementation.Minimax(board.board, 10, Integer.MIN_VALUE, Integer.MAX_VALUE, true);
+
+            minimax_implementation.dropPiece(board.board, column.col, Player.AI);
+
+            board.printBoard(board.board);
+
+        }
+*/
+
     }
 }
